@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "context7": {
+      "command": "python",
+      "args": ["-m", "mcp_server_context7"]
+    },
+    "sequential-thinking": {
+      "command": "python",
+      "args": ["-m", "mcp_server_sequential_thinking"]
+    },
+    "playwright": {
+      "command": "python",
+      "args": ["-m", "mcp_server_playwright"]
+    }
+  }
+}

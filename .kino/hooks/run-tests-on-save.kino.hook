@@ -1,0 +1,7 @@
+{
+  "name": "run-tests-on-save",
+  "eventType": "fileSaved",
+  "patterns": ["**/*.ts", "**/*.js"],
+  "prompt": "Run unit tests for the modified TypeScript/JavaScript files to ensure code quality",
+  "enabled": true
+}

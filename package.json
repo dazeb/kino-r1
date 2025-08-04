@@ -1,0 +1,417 @@
+{
+	"name": "kino-ai",
+	"displayName": "Kino AI",
+	"description": "AI-powered development assistant with specifications, agent hooks, steering, and MCP server integration",
+	"version": "0.0.2",
+	"preview": true,
+	"icon": "icon.png",
+	"galleryBanner": {
+		"color": "#eff1f3",
+		"theme": "dark"
+	},
+	"pricing": "Free",
+	"license": "MIT",
+	"publisher": "dazeb",
+	"author": "dazeb",
+	"sponsor": {
+		"url": "https://github.com/sponsors/dazeb"
+	},
+	"engines": {
+		"vscode": "^1.74.0"
+	},
+	"categories": [
+		"AI",
+		"Other"
+	],
+	"keywords": [
+		"ai",
+		"assistant",
+		"chat",
+		"deepseek",
+		"hooks",
+		"mcp",
+		"specifications",
+		"steering",
+		"kino"
+	],
+	"homepage": "https://github.com/dazeb/kino-ai",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/dazeb/kino-ai"
+	},
+	"bugs": {
+		"url": "https://github.com/dazeb/kino-ai/issues"
+	},
+	"activationEvents": [
+		"onView:kinoAI.chatView",
+		"onView:kinoAI.specsView",
+		"onView:kinoAI.hooksView",
+		"onView:kinoAI.steeringView",
+		"onView:kinoAI.mcpView"
+	],
+	"main": "./out/extension.js",
+	"l10n": "./l10n",
+	"contributes": {
+		"configuration": {
+			"title": "Kino AI",
+			"properties": {
+				"kino.general.autoRefresh": {
+					"type": "boolean",
+					"default": true,
+					"scope": "resource",
+					"description": "Enable automatic refresh of sidebar content"
+				},
+				"kino.general.logLevel": {
+					"type": "string",
+					"default": "info",
+					"enum": [
+						"debug",
+						"info",
+						"warn",
+						"error"
+					],
+					"scope": "resource",
+					"description": "Set logging level"
+				},
+				"kino.llm.defaultProvider": {
+					"type": "string",
+					"default": "deepseek",
+					"enum": [
+						"deepseek"
+					],
+					"scope": "resource",
+					"description": "Default AI provider"
+				},
+				"kino.llm.apiKey": {
+					"type": "string",
+					"default": "",
+					"scope": "resource",
+					"description": "DeepSeek API key for chat functionality"
+				},
+				"kino.llm.requestTimeout": {
+					"type": "number",
+					"default": 30000,
+					"scope": "resource",
+					"description": "Request timeout in milliseconds"
+				},
+				"kino.hooks.enabled": {
+					"type": "boolean",
+					"default": true,
+					"scope": "resource",
+					"description": "Enable/disable hook system"
+				},
+				"kino.hooks.autoExecuteOnSave": {
+					"type": "boolean",
+					"default": false,
+					"scope": "resource",
+					"description": "Auto-execute hooks on file save"
+				},
+				"kino.mcp.autoConnect": {
+					"type": "boolean",
+					"default": true,
+					"scope": "resource",
+					"description": "Automatically connect to configured servers"
+				},
+				"kino.mcp.retryAttempts": {
+					"type": "number",
+					"default": 3,
+					"scope": "resource",
+					"description": "Number of connection retry attempts"
+				}
+			}
+		},
+		"commands": [
+			{
+				"command": "kinoAI.createNewSpec",
+				"title": "Create New Spec",
+				"category": "Kino AI",
+				"icon": "$(add)"
+			},
+			{
+				"command": "kinoAI.openSpecRequirements",
+				"title": "Edit Requirements",
+				"category": "Kino AI"
+			},
+			{
+				"command": "kinoAI.openSpecDesign",
+				"title": "Edit Design",
+				"category": "Kino AI"
+			},
+			{
+				"command": "kinoAI.openSpecTasks",
+				"title": "Edit Tasks",
+				"category": "Kino AI"
+			},
+			{
+				"command": "kinoAI.openAllSpecFiles",
+				"title": "Open All Files",
+				"category": "Kino AI"
+			},
+			{
+				"command": "kinoAI.deleteSpec",
+				"title": "Delete Spec",
+				"category": "Kino AI"
+			},
+			{
+				"command": "kinoAI.createHook",
+				"title": "Create Hook",
+				"category": "Kino AI",
+				"icon": "$(add)"
+			},
+			{
+				"command": "kinoAI.editHook",
+				"title": "Edit Hook",
+				"category": "Kino AI"
+			},
+			{
+				"command": "kinoAI.executeHook",
+				"title": "Execute Hook",
+				"category": "Kino AI",
+				"icon": "$(play)"
+			},
+			{
+				"command": "kinoAI.toggleHook",
+				"title": "Toggle Hook",
+				"category": "Kino AI"
+			},
+			{
+				"command": "kinoAI.deleteHook",
+				"title": "Delete Hook",
+				"category": "Kino AI"
+			},
+			{
+				"command": "kinoAI.createSteeringFile",
+				"title": "Create Steering File",
+				"category": "Kino AI",
+				"icon": "$(add)"
+			},
+			{
+				"command": "kinoAI.editSteeringFile",
+				"title": "Edit Steering File",
+				"category": "Kino AI"
+			},
+			{
+				"command": "kinoAI.deleteSteeringFile",
+				"title": "Delete Steering File",
+				"category": "Kino AI"
+			},
+			{
+				"command": "kinoAI.openMCPConfiguration",
+				"title": "Open MCP Configuration",
+				"category": "Kino AI"
+			},
+			{
+				"command": "kinoAI.reconnectMCPServer",
+				"title": "Reconnect MCP Server",
+				"category": "Kino AI",
+				"icon": "$(refresh)"
+			},
+			{
+				"command": "kinoAI.showMCPServerInfo",
+				"title": "Show Server Info",
+				"category": "Kino AI"
+			},
+			{
+				"command": "kinoAI.refreshSpecs",
+				"title": "Refresh",
+				"category": "Kino AI",
+				"icon": "$(refresh)"
+			},
+			{
+				"command": "kinoAI.refreshHooks",
+				"title": "Refresh",
+				"category": "Kino AI",
+				"icon": "$(refresh)"
+			},
+			{
+				"command": "kinoAI.refreshSteering",
+				"title": "Refresh",
+				"category": "Kino AI",
+				"icon": "$(refresh)"
+			},
+			{
+				"command": "kinoAI.refreshMCP",
+				"title": "Refresh",
+				"category": "Kino AI",
+				"icon": "$(refresh)"
+			}
+		],
+		"menus": {
+			"view/title": [
+				{
+					"command": "kinoAI.createNewSpec",
+					"when": "view == kinoAI.specsView",
+					"group": "navigation"
+				},
+				{
+					"command": "kinoAI.refreshSpecs",
+					"when": "view == kinoAI.specsView",
+					"group": "navigation"
+				},
+				{
+					"command": "kinoAI.createHook",
+					"when": "view == kinoAI.hooksView",
+					"group": "navigation"
+				},
+				{
+					"command": "kinoAI.refreshHooks",
+					"when": "view == kinoAI.hooksView",
+					"group": "navigation"
+				},
+				{
+					"command": "kinoAI.createSteeringFile",
+					"when": "view == kinoAI.steeringView",
+					"group": "navigation"
+				},
+				{
+					"command": "kinoAI.refreshSteering",
+					"when": "view == kinoAI.steeringView",
+					"group": "navigation"
+				},
+				{
+					"command": "kinoAI.refreshMCP",
+					"when": "view == kinoAI.mcpView",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "kinoAI.openSpecRequirements",
+					"when": "view == kinoAI.specsView && viewItem == spec"
+				},
+				{
+					"command": "kinoAI.openSpecDesign",
+					"when": "view == kinoAI.specsView && viewItem == spec"
+				},
+				{
+					"command": "kinoAI.openSpecTasks",
+					"when": "view == kinoAI.specsView && viewItem == spec"
+				},
+				{
+					"command": "kinoAI.openAllSpecFiles",
+					"when": "view == kinoAI.specsView && viewItem == spec"
+				},
+				{
+					"command": "kinoAI.deleteSpec",
+					"when": "view == kinoAI.specsView && viewItem == spec"
+				},
+				{
+					"command": "kinoAI.executeHook",
+					"when": "view == kinoAI.hooksView && viewItem == hook"
+				},
+				{
+					"command": "kinoAI.editHook",
+					"when": "view == kinoAI.hooksView && viewItem == hook"
+				},
+				{
+					"command": "kinoAI.toggleHook",
+					"when": "view == kinoAI.hooksView && viewItem == hook"
+				},
+				{
+					"command": "kinoAI.deleteHook",
+					"when": "view == kinoAI.hooksView && viewItem == hook"
+				},
+				{
+					"command": "kinoAI.editSteeringFile",
+					"when": "view == kinoAI.steeringView && viewItem == steeringFile"
+				},
+				{
+					"command": "kinoAI.deleteSteeringFile",
+					"when": "view == kinoAI.steeringView && viewItem == steeringFile"
+				},
+				{
+					"command": "kinoAI.reconnectMCPServer",
+					"when": "view == kinoAI.mcpView && viewItem == mcpServer"
+				},
+				{
+					"command": "kinoAI.showMCPServerInfo",
+					"when": "view == kinoAI.mcpView && viewItem == mcpServer"
+				}
+			]
+		},
+		"viewsWelcome": [
+			{
+				"view": "extensionIdentifier.listFilesView",
+				"contents": "%extensionIdentifier.listFilesView.welcome%"
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "kino-ai",
+					"title": "Kino AI",
+					"icon": "./assets/logo.svg"
+				},
+				{
+					"id": "kino-chat",
+					"title": "Kino Chat",
+					"icon": "./assets/logo.svg"
+				}
+			]
+		},
+		"views": {
+			"kino-ai": [
+				{
+					"id": "kinoAI.specsView",
+					"name": "SPECS",
+					"visibility": "visible"
+				},
+				{
+					"id": "kinoAI.hooksView",
+					"name": "AGENT HOOKS",
+					"visibility": "visible"
+				},
+				{
+					"id": "kinoAI.steeringView",
+					"name": "AGENT STEERING",
+					"visibility": "visible"
+				},
+				{
+					"id": "kinoAI.mcpView",
+					"name": "MCP SERVERS",
+					"visibility": "visible"
+				}
+			],
+			"kino-chat": [
+				{
+					"id": "kinoAI.chatView",
+					"name": "AI Chat",
+					"type": "webview"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "rimraf out && tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"pretest": "npm run compile && npm run lint",
+		"format": "biome format --write",
+		"lint": "biome lint --write",
+		"lint:check": "biome check --write",
+		"test": "vscode-test",
+		"compodoc": "npx compodoc -p tsconfig.doc.json -d compodoc --theme readthedocs -s",
+		"prepare": "husky"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.9.4",
+		"@commitlint/cli": "^19.6.1",
+		"@commitlint/config-conventional": "^19.6.0",
+		"@compodoc/compodoc": "^1.1.26",
+		"@types/mocha": "^10.0.10",
+		"@types/node": "^22.9.0",
+		"@types/vscode": "^1.88.0",
+		"@vscode/l10n-dev": "^0.0.35",
+		"@vscode/test-cli": "^0.0.10",
+		"@vscode/test-electron": "^2.4.1",
+		"glob": "^11.0.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^15.2.11",
+		"rimraf": "^6.0.1",
+		"typescript": "^5.7.2"
+	},
+	"dependencies": {
+		"@vscode/codicons": "^0.0.36",
+		"axios": "^1.6.0"
+	}
+}
