@@ -6,3 +6,4 @@ export * from './specsProvider';
 export * from './hooksProvider';
 export * from './steeringProvider';
 export * from './mcpProvider';
+export * from './kino-chat.provider';

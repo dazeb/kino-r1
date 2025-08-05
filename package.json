@@ -19,6 +19,9 @@
 	"engines": {
 		"vscode": "^1.74.0"
 	},
+	"activationEvents": [
+		"onStartupFinished"
+	],
 	"categories": [
 		"AI",
 		"Other"
@@ -39,17 +42,10 @@
 		"type": "git",
 		"url": "https://github.com/dazeb/kino-ai"
 	},
-	"bugs": {
-		"url": "https://github.com/dazeb/kino-ai/issues"
-	},
-	"activationEvents": [
-		"onView:kinoAI.chatView",
-		"onView:kinoAI.specsView",
-		"onView:kinoAI.hooksView",
-		"onView:kinoAI.steeringView",
-		"onView:kinoAI.mcpView"
-	],
-	"main": "./out/extension.js",
+"bugs": {
+"url": "https://github.com/dazeb/kino-ai/issues"
+},
+"main": "./out/extension.js",
 	"l10n": "./l10n",
 	"contributes": {
 		"configuration": {
@@ -121,6 +117,11 @@
 			}
 		},
 		"commands": [
+		  {
+		    "command": "kinoAI.openChat",
+		    "title": "Open Kino AI Chat",
+		    "category": "Kino AI"
+		  },
 			{
 				"command": "kinoAI.createNewSpec",
 				"title": "Create New Spec",
@@ -354,37 +355,56 @@
 				{
 					"id": "kinoAI.specsView",
 					"name": "SPECS",
-					"visibility": "visible"
+					"visibility": "visible",
+					"icon": "codicon-file"
 				},
 				{
 					"id": "kinoAI.hooksView",
 					"name": "AGENT HOOKS",
-					"visibility": "visible"
+					"visibility": "visible",
+					"icon": "codicon-file"
 				},
 				{
 					"id": "kinoAI.steeringView",
 					"name": "AGENT STEERING",
-					"visibility": "visible"
+					"visibility": "visible",
+					"icon": "codicon-file"
 				},
 				{
 					"id": "kinoAI.mcpView",
 					"name": "MCP SERVERS",
-					"visibility": "visible"
+					"visibility": "visible",
+					"icon": "codicon-file"
 				}
 			],
 			"kino-chat": [
 				{
-					"id": "kinoAI.chatView",
+					"id": "kinoAI.kinoChatView",
 					"name": "AI Chat",
-					"type": "webview"
+					"icon": "codicon-file"
 				}
 			]
-		}
+		},
+		"chatParticipants": [
+			{
+				"id": "kinoAI.kinoChatView",
+				"name": "kino-ai",
+				"fullName": "Kino AI",
+				"description": "Your AI-powered development assistant.",
+				"isSticky": true,
+				"commands": [
+					{
+						"name": "teach",
+						"description": "Teach me a random computer science concept."
+					}
+				]
+			}
+		]
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
 		"compile": "rimraf out && tsc -p ./",
-		"watch": "tsc -watch -p ./",
+		"watch": "tsc -watch -p ./ --problemMatcher=[]",
 		"pretest": "npm run compile && npm run lint",
 		"format": "biome format --write",
 		"lint": "biome lint --write",

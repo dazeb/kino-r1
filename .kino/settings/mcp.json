@@ -1,12 +1,16 @@
 {
   "mcpServers": {
     "context7": {
-      "command": "python",
-      "args": ["-m", "mcp_server_context7"]
+      "command": "node",
+      "args": ["/home/dazeb/.config/mcp/context7/dist/index.js"]
     },
     "sequential-thinking": {
-      "command": "python",
-      "args": ["-m", "mcp_server_sequential_thinking"]
+      "command": "node",
+      "args": ["/home/dazeb/.config/mcp/mcp-servers/src/sequentialthinking/dist/index.js"]
+    },
+    "filesystem": {
+      "command": "node",
+      "args": ["/home/dazeb/.config/mcp/mcp-servers/src/filesystem/dist/index.js"]
     },
     "playwright": {
       "command": "python",
